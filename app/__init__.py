@@ -1,8 +1,14 @@
 import os
-from flask import Flask
+from flask import Flask, app
 from app.config import config_map
 from app.extensions import mongo, init_celery
 from app.movies.repository import MovieRepository
+
+
+@app.route("/")
+def index():
+    from flask import redirect
+    return redirect("/api/v1/movies/ui")
 
 
 def create_app(config_name: str | None = None) -> Flask:

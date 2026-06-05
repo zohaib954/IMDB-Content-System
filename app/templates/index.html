@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyRounds × IMDB Assignment</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #1557b0;
+            --bg: #f0f4f8;
+            --card: #ffffff;
+            --text: #1a202c;
+            --text-light: #718096;
+            --border: #e2e8f0;
+            --success: #38a169;
+            --error: #e53e3e;
+            --warning: #d69e2e;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: white;
+            padding: 0 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-badge {
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .header-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .stat-pill {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 12px;
+            color: #a0aec0;
+        }
+
+        .stat-pill span {
+            color: #68d391;
+            font-weight: 600;
+        }
+
+        /* Main layout */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Stats bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .stat-card .label {
+            font-size: 12px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .stat-card .value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-card .sub {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 2px;
+        }
+
+        /* Upload section */
+        .upload-section {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 18px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .upload-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .upload-box {
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .upload-box:hover {
+            border-color: var(--primary);
+            background: #f0f7ff;
+        }
+
+        .upload-box input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        .upload-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .upload-box h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .upload-box p {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 12px;
+        }
+
+        .mode-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .mode-sync { background: #ebf8ff; color: #2b6cb0; }
+        .mode-async { background: #f0fff4; color: #276749; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover { background: var(--primary-dark); }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-primary:disabled, .btn-success:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Progress bar */
+        .progress-wrap {
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 6px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #68d391);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .progress-fill.indeterminate {
+            width: 40%;
+            animation: slide 1.5s infinite;
+        }
+
+        @keyframes slide {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(350%); }
+        }
+
+        /* Alert */
+        .alert {
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .alert-success { background: #f0fff4; color: #276749; border: 1px solid #9ae6b4; }
+        .alert-error { background: #fff5f5; color: #c53030; border: 1px solid #feb2b2; }
+        .alert-info { background: #ebf8ff; color: #2b6cb0; border: 1px solid #90cdf4; }
+
+        /* Filters section */
+        .filters-section {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr) auto;
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .filter-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            margin-bottom: 6px;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            color: var(--text);
+            background: white;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .filter-group input:focus,
+        .filter-group select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26,115,232,0.1);
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--text-light);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Table */
+        .table-section {
+            background: var(--card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .table-info {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .table-info strong {
+            color: var(--text);
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        thead th {
+            background: #f7fafc;
+            padding: 10px 16px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+
+        tbody tr:hover { background: #f7fafc; }
+        tbody tr:last-child { border-bottom: none; }
+
+        tbody td {
+            padding: 12px 16px;
+            color: var(--text);
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .rating-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #fffbeb;
+            color: #b7791f;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .lang-tag {
+            display: inline-block;
+            background: #ebf8ff;
+            color: #2b6cb0;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            margin: 1px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status-released { background: #f0fff4; color: #276749; }
+        .status-other { background: #f7fafc; color: var(--text-light); }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-light);
+        }
+
+        .empty-state .icon { font-size: 48px; margin-bottom: 1rem; }
+        .empty-state h3 { font-size: 16px; margin-bottom: 8px; color: var(--text); }
+        .empty-state p { font-size: 14px; }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .page-info {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .page-controls {
+            display: flex;
+            gap: 4px;
+        }
+
+        .page-btn {
+            min-width: 32px;
+            height: 32px;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+            color: var(--text);
+        }
+
+        .page-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .page-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .page-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* Loading overlay */
+        .loading-row td {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-light);
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Job status card */
+        .job-status-card {
+            background: #ebf8ff;
+            border: 1px solid #90cdf4;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-top: 12px;
+            display: none;
+            font-size: 13px;
+        }
+
+        .job-status-card .job-id {
+            font-family: monospace;
+            font-size: 11px;
+            color: var(--text-light);
+            margin-bottom: 6px;
+        }
+
+        .job-status-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .dot-pending { background: var(--warning); }
+        .dot-processing { background: var(--primary); animation: pulse 1s infinite; }
+        .dot-completed { background: var(--success); }
+        .dot-failed { background: var(--error); }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="logo">
+            <span class="logo-badge">DR × IMDB</span>
+            <span class="logo-title">Content Upload & Review System</span>
+        </div>
+        <div class="header-meta">
+            <div class="stat-pill">Sync: <span>190s</span></div>
+            <div class="stat-pill">Async: <span>99s</span></div>
+            <div class="stat-pill">Scale: <span>1GB CSV</span></div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="stat-card">
+            <div class="label">Total Movies</div>
+            <div class="value" id="stat-total">—</div>
+            <div class="sub">in database</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">Sync Upload Time</div>
+            <div class="value">190s</div>
+            <div class="sub">45,428 records · blocks request</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">Async Upload Time</div>
+            <div class="value">99s</div>
+            <div class="sub">background · returns in 50ms</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">Max File Size</div>
+            <div class="value">1 GB</div>
+            <div class="sub">chunked streaming · O(1) memory</div>
+        </div>
+    </div>
+
+    <!-- Upload Section -->
+    <div class="upload-section">
+        <div class="section-title">CSV Upload</div>
+        <div class="upload-grid">
+
+            <!-- Sync Upload -->
+            <div>
+                <div class="upload-box" id="sync-drop">
+                    <input type="file" id="sync-file" accept=".csv">
+                    <div class="upload-icon">📄</div>
+                    <span class="mode-badge mode-sync">SYNC MODE</span>
+                    <h3>Synchronous Upload</h3>
+                    <p>Blocks until complete. Best for measuring raw performance.</p>
+                    <button class="btn btn-primary" id="sync-btn" onclick="uploadFile('sync')">
+                        Upload CSV
+                    </button>
+                </div>
+                <div class="progress-wrap" id="sync-progress">
+                    <div class="progress-label">
+                        <span>Processing...</span>
+                        <span id="sync-pct">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill indeterminate" id="sync-fill"></div>
+                    </div>
+                </div>
+                <div class="alert" id="sync-alert"></div>
+            </div>
+
+            <!-- Async Upload -->
+            <div>
+                <div class="upload-box" id="async-drop">
+                    <input type="file" id="async-file" accept=".csv">
+                    <div class="upload-icon">⚡</div>
+                    <span class="mode-badge mode-async">ASYNC MODE</span>
+                    <h3>Asynchronous Upload</h3>
+                    <p>Returns instantly. Celery + Redis processes in background.</p>
+                    <button class="btn btn-success" id="async-btn" onclick="uploadFile('async')">
+                        Upload CSV
+                    </button>
+                </div>
+                <div class="progress-wrap" id="async-progress">
+                    <div class="progress-label">
+                        <span id="async-status-text">Queuing task...</span>
+                        <span id="async-pct"></span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill indeterminate" id="async-fill"></div>
+                    </div>
+                </div>
+                <div class="job-status-card" id="job-card">
+                    <div class="job-id" id="job-id-text"></div>
+                    <div class="job-status-row">
+                        <div id="job-status-label">
+                            <span class="status-dot dot-pending"></span> Pending
+                        </div>
+                        <div id="job-inserted" style="color: var(--text-light)"></div>
+                    </div>
+                </div>
+                <div class="alert" id="async-alert"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters-section">
+        <div class="section-title">Browse Movies</div>
+        <div class="filters-grid">
+            <div class="filter-group">
+                <label>Year</label>
+                <input type="number" id="filter-year" placeholder="e.g. 1995" min="1900" max="2030">
+            </div>
+            <div class="filter-group">
+                <label>Language</label>
+                <input type="text" id="filter-language" placeholder="e.g. English">
+            </div>
+            <div class="filter-group">
+                <label>Sort By</label>
+                <select id="filter-sort">
+                    <option value="">— No Sort —</option>
+                    <option value="release_date_asc">Release Date ↑</option>
+                    <option value="release_date_desc">Release Date ↓</option>
+                    <option value="ratings_asc">Rating ↑</option>
+                    <option value="ratings_desc">Rating ↓</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Per Page</label>
+                <select id="filter-size">
+                    <option value="10">10</option>
+                    <option value="20" selected>20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>&nbsp;</label>
+                <div class="filter-actions">
+                    <button class="btn btn-primary" onclick="loadMovies(1)">Search</button>
+                    <button class="btn btn-outline" onclick="resetFilters()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-section">
+        <div class="table-header">
+            <div class="section-title" style="margin-bottom:0">Results</div>
+            <div class="table-info" id="table-info">—</div>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Original Title</th>
+                        <th>Release Date</th>
+                        <th>Rating</th>
+                        <th>Votes</th>
+                        <th>Language</th>
+                        <th>Status</th>
+                        <th>Runtime</th>
+                        <th>Budget</th>
+                    </tr>
+                </thead>
+                <tbody id="movies-tbody">
+                    <tr class="loading-row">
+                        <td colspan="10">
+                            <div class="empty-state">
+                                <div class="icon">🎬</div>
+                                <h3>No data loaded yet</h3>
+                                <p>Upload a CSV file or click Search to browse movies</p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination" id="pagination" style="display:none">
+            <div class="page-info" id="page-info"></div>
+            <div class="page-controls" id="page-controls"></div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    Built by Zohaib · DailyRounds SDE-1 Assignment · Flask + MongoDB + Celery + Redis · Deployed on GCP
+</footer>
+
+<script>
+    const API = '';  // same origin
+    let currentPage = 1;
+    let currentTotal = 0;
+    let jobPollInterval = null;
+
+    // ─── Upload ───────────────────────────────────────────────────────────────
+
+    async function uploadFile(mode) {
+        const fileInput = document.getElementById(`${mode}-file`);
+        const file = fileInput.files[0];
+
+        if (!file) {
+            showAlert(mode, 'Please select a CSV file first.', 'error');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        showProgress(mode, true);
+        hideAlert(mode);
+        document.getElementById(`${mode}-btn`).disabled = true;
+
+        try {
+            const res = await fetch(`${API}/api/v1/movies/upload/${mode}`, {
+                method: 'POST',
+                body: formData
+            });
+            const data = await res.json();
+
+            if (data.success) {
+                if (mode === 'sync') {
+                    showProgress('sync', false);
+                    showAlert('sync',
+                        `✅ Done! ${data.data.total_inserted.toLocaleString()} records inserted in ${data.data.processing_time_seconds}s`,
+                        'success'
+                    );
+                    loadMovies(1);
+                } else {
+                    // Async — start polling
+                    const jobId = data.data.job_id;
+                    showJobCard(jobId);
+                    pollJobStatus(jobId);
+                }
+            } else {
+                showProgress(mode, false);
+                showAlert(mode, `❌ ${data.message}`, 'error');
+            }
+        } catch (err) {
+            showProgress(mode, false);
+            showAlert(mode, `❌ Network error: ${err.message}`, 'error');
+        } finally {
+            document.getElementById(`${mode}-btn`).disabled = false;
+        }
+    }
+
+    // ─── Job Status Polling ───────────────────────────────────────────────────
+
+    function showJobCard(jobId) {
+        const card = document.getElementById('job-card');
+        card.style.display = 'block';
+        document.getElementById('job-id-text').textContent = `Job ID: ${jobId}`;
+        document.getElementById('job-status-label').innerHTML =
+            `<span class="status-dot dot-processing"></span> Processing`;
+        document.getElementById('job-inserted').textContent = '';
+    }
+
+    function pollJobStatus(jobId) {
+        if (jobPollInterval) clearInterval(jobPollInterval);
+
+        jobPollInterval = setInterval(async () => {
+            try {
+                const res = await fetch(`${API}/api/v1/movies/upload/status/${jobId}`);
+                const data = await res.json();
+
+                if (!data.success) return;
+
+                const job = data.data;
+                const statusLabel = document.getElementById('job-status-label');
+                const insertedEl = document.getElementById('job-inserted');
+                const statusText = document.getElementById('async-status-text');
+
+                if (job.status === 'processing') {
+                    statusLabel.innerHTML =
+                        `<span class="status-dot dot-processing"></span> Processing`;
+                    statusText.textContent = 'Worker processing in background...';
+
+                } else if (job.status === 'completed') {
+                    clearInterval(jobPollInterval);
+                    statusLabel.innerHTML =
+                        `<span class="status-dot dot-completed"></span> Completed`;
+                    insertedEl.textContent =
+                        `${job.total_inserted.toLocaleString()} records · ${job.processing_time_seconds}s`;
+                    showProgress('async', false);
+                    showAlert('async',
+                        `✅ Done! ${job.total_inserted.toLocaleString()} records inserted in ${job.processing_time_seconds}s`,
+                        'success'
+                    );
+                    loadMovies(1);
+
+                } else if (job.status === 'failed') {
+                    clearInterval(jobPollInterval);
+                    statusLabel.innerHTML =
+                        `<span class="status-dot dot-failed"></span> Failed`;
+                    showProgress('async', false);
+                    showAlert('async', `❌ ${job.error}`, 'error');
+                }
+            } catch (e) {
+                // Silently retry
+            }
+        }, 3000); // poll every 3 seconds
+    }
+
+    // ─── Movies Table ─────────────────────────────────────────────────────────
+
+    async function loadMovies(page) {
+        currentPage = page;
+
+        const year = document.getElementById('filter-year').value;
+        const language = document.getElementById('filter-language').value;
+        const sort = document.getElementById('filter-sort').value;
+        const size = document.getElementById('filter-size').value;
+
+        const params = new URLSearchParams({ page, page_size: size });
+        if (year) params.append('year', year);
+        if (language) params.append('language', language);
+        if (sort) params.append('sort_by', sort);
+
+        showTableLoading();
+
+        try {
+            const res = await fetch(`${API}/api/v1/movies/?${params}`);
+            const data = await res.json();
+
+            if (data.success) {
+                renderTable(data.data, data.meta, page, parseInt(size));
+                updateStatTotal(data.meta.total);
+            } else {
+                showTableError(data.message);
+            }
+        } catch (err) {
+            showTableError('Failed to load movies. Is the server running?');
+        }
+    }
+
+    function renderTable(movies, meta, page, pageSize) {
+        const tbody = document.getElementById('movies-tbody');
+        const offset = (page - 1) * pageSize;
+
+        if (!movies.length) {
+            tbody.innerHTML = `
+                <tr class="loading-row"><td colspan="10">
+                    <div class="empty-state">
+                        <div class="icon">🔍</div>
+                        <h3>No movies found</h3>
+                        <p>Try adjusting your filters</p>
+                    </div>
+                </td></tr>`;
+            document.getElementById('pagination').style.display = 'none';
+            document.getElementById('table-info').textContent = '0 results';
+            return;
+        }
+
+        tbody.innerHTML = movies.map((m, i) => {
+            const langs = Array.isArray(m.languages)
+                ? m.languages.map(l => `<span class="lang-tag">${l}</span>`).join('')
+                : m.languages || '—';
+
+            const statusClass = (m.status || '').toLowerCase() === 'released'
+                ? 'status-released' : 'status-other';
+
+            const budget = m.budget
+                ? `$${(m.budget / 1e6).toFixed(1)}M` : '—';
+
+            return `
+                <tr>
+                    <td style="color:var(--text-light)">${offset + i + 1}</td>
+                    <td title="${m.title || ''}" style="font-weight:600">${m.title || '—'}</td>
+                    <td title="${m.original_title || ''}">${m.original_title || '—'}</td>
+                    <td>${m.release_date || '—'}</td>
+                    <td><span class="rating-badge">⭐ ${m.vote_average ?? '—'}</span></td>
+                    <td>${m.vote_count ? m.vote_count.toLocaleString() : '—'}</td>
+                    <td>${langs}</td>
+                    <td><span class="status-badge ${statusClass}">${m.status || '—'}</span></td>
+                    <td>${m.runtime ? m.runtime + ' min' : '—'}</td>
+                    <td>${budget}</td>
+                </tr>`;
+        }).join('');
+
+        // Table info
+        const start = offset + 1;
+        const end = Math.min(offset + movies.length, meta.total);
+        document.getElementById('table-info').innerHTML =
+            `Showing <strong>${start}–${end}</strong> of <strong>${meta.total.toLocaleString()}</strong> results`;
+
+        renderPagination(meta);
+    }
+
+    function renderPagination(meta) {
+        const wrap = document.getElementById('pagination');
+        const controls = document.getElementById('page-controls');
+        const info = document.getElementById('page-info');
+
+        wrap.style.display = 'flex';
+        info.textContent = `Page ${meta.page} of ${meta.total_pages}`;
+
+        const pages = [];
+        const total = meta.total_pages;
+        const cur = meta.page;
+
+        // Always show first, last, current ±2
+        const show = new Set([1, total, cur, cur-1, cur-2, cur+1, cur+2]
+            .filter(p => p >= 1 && p <= total));
+        const sorted = [...show].sort((a,b) => a-b);
+
+        let html = `
+            <button class="page-btn" onclick="loadMovies(${cur-1})"
+                ${cur === 1 ? 'disabled' : ''}>‹</button>`;
+
+        let prev = 0;
+        for (const p of sorted) {
+            if (prev && p - prev > 1) {
+                html += `<button class="page-btn" disabled>…</button>`;
+            }
+            html += `<button class="page-btn ${p === cur ? 'active' : ''}"
+                onclick="loadMovies(${p})">${p}</button>`;
+            prev = p;
+        }
+
+        html += `<button class="page-btn" onclick="loadMovies(${cur+1})"
+            ${cur === total ? 'disabled' : ''}>›</button>`;
+
+        controls.innerHTML = html;
+    }
+
+    function updateStatTotal(total) {
+        document.getElementById('stat-total').textContent =
+            total.toLocaleString();
+    }
+
+    // ─── UI Helpers ───────────────────────────────────────────────────────────
+
+    function showProgress(mode, show) {
+        const wrap = document.getElementById(`${mode}-progress`);
+        wrap.style.display = show ? 'block' : 'none';
+    }
+
+    function showAlert(mode, msg, type) {
+        const el = document.getElementById(`${mode}-alert`);
+        el.className = `alert alert-${type}`;
+        el.textContent = msg;
+        el.style.display = 'block';
+    }
+
+    function hideAlert(mode) {
+        document.getElementById(`${mode}-alert`).style.display = 'none';
+    }
+
+    function showTableLoading() {
+        document.getElementById('movies-tbody').innerHTML = `
+            <tr class="loading-row"><td colspan="10">
+                <span class="spinner"></span> Loading movies...
+            </td></tr>`;
+        document.getElementById('pagination').style.display = 'none';
+    }
+
+    function showTableError(msg) {
+        document.getElementById('movies-tbody').innerHTML = `
+            <tr class="loading-row"><td colspan="10">
+                <div class="empty-state">
+                    <div class="icon">⚠️</div>
+                    <h3>Error</h3>
+                    <p>${msg}</p>
+                </div>
+            </td></tr>`;
+    }
+
+    function resetFilters() {
+        document.getElementById('filter-year').value = '';
+        document.getElementById('filter-language').value = '';
+        document.getElementById('filter-sort').value = '';
+        document.getElementById('filter-size').value = '20';
+        loadMovies(1);
+    }
+
+    // ─── Init ─────────────────────────────────────────────────────────────────
+    loadMovies(1);
+</script>
+</body>
+</html>

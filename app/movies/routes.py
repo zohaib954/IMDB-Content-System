@@ -7,11 +7,15 @@ from app.movies.service import MovieService
 from app.movies.schemas import MovieListQuerySchema
 from app.core.responses import success_response, error_response
 from app.core.exceptions import AppException
+from flask import Blueprint, request, render_template
 
 movies_bp = Blueprint("movies", __name__, url_prefix="/api/v1/movies")
 
 query_schema = MovieListQuerySchema()
 
+@movies_bp.route("/ui")
+def ui():
+    return render_template("index.html")
 
 def _get_service() -> MovieService:
     """Dependency injection: build service with its dependencies."""
