@@ -1,0 +1,93 @@
+{
+  "info": {
+    "name": "IMDB Content System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [{ "key": "base_url", "value": "http://localhost:5000" }],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": { "method": "GET", "url": "{{base_url}}/health" }
+    },
+    {
+      "name": "Upload CSV (Sync)",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/v1/movies/upload/sync",
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": "movies_data_assignment.csv"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Upload CSV (Async)",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/v1/movies/upload/async",
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": "movies_data_assignment.csv"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Check Upload Job Status",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/v1/movies/upload/status/{{job_id}}"
+      }
+    },
+    {
+      "name": "List Movies (Default)",
+      "request": { "method": "GET", "url": "{{base_url}}/api/v1/movies/" }
+    },
+    {
+      "name": "List Movies - Filter by Year",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/v1/movies/?year=1995"
+      }
+    },
+    {
+      "name": "List Movies - Filter by Language",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/v1/movies/?language=English"
+      }
+    },
+    {
+      "name": "List Movies - Sort by Rating DESC",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/v1/movies/?sort_by=ratings_desc"
+      }
+    },
+    {
+      "name": "List Movies - Sort by Release Date ASC",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/v1/movies/?sort_by=release_date_asc"
+      }
+    },
+    {
+      "name": "List Movies - Combined Filters",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/v1/movies/?year=1995&language=English&sort_by=ratings_desc&page=1&page_size=10"
+      }
+    }
+  ]
+}
