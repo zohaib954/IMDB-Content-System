@@ -1,0 +1,15 @@
+marrow.zohaibdev.com {
+    reverse_proxy web:5000
+
+    request_body {
+        max_size 1100MB
+    }
+
+    encode gzip
+
+    header {
+        X-Content-Type-Options nosniff
+        X-Frame-Options DENY
+        X-XSS-Protection "1; mode=block"
+    }
+}
