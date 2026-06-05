@@ -1,14 +1,8 @@
 import os
-from flask import Flask, app
+from flask import Flask, redirect
 from app.config import config_map
 from app.extensions import mongo, init_celery
 from app.movies.repository import MovieRepository
-
-
-@app.route("/")
-def index():
-    from flask import redirect
-    return redirect("/api/v1/movies/ui")
 
 
 def create_app(config_name: str | None = None) -> Flask:
@@ -31,7 +25,12 @@ def create_app(config_name: str | None = None) -> Flask:
             repo = MovieRepository(mongo.db["movies"])
             repo.ensure_indexes()
         except Exception:
-            pass  # Don't crash if Atlas unreachable at startup
+            pass
+
+    # Routes
+    @app.route("/")
+    def index():
+        return redirect("/api/v1/movies/ui")
 
     @app.errorhandler(413)
     def request_entity_too_large(error):
