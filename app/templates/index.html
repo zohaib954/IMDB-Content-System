@@ -27,7 +27,6 @@
             min-height: 100vh;
         }
 
-        /* Header */
         header {
             background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
             color: white;
@@ -47,11 +46,7 @@
             height: 64px;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .logo { display: flex; align-items: center; gap: 12px; }
 
         .logo-badge {
             background: var(--primary);
@@ -60,22 +55,13 @@
             border-radius: 6px;
             font-weight: 700;
             font-size: 13px;
-            letter-spacing: 0.5px;
         }
 
-        .logo-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #e2e8f0;
-        }
+        .logo-title { font-size: 16px; font-weight: 600; color: #e2e8f0; }
 
-        .header-meta {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
+        .header-pills { display: flex; gap: 10px; align-items: center; }
 
-        .stat-pill {
+        .pill {
             background: rgba(255,255,255,0.1);
             border: 1px solid rgba(255,255,255,0.15);
             border-radius: 20px;
@@ -84,19 +70,11 @@
             color: #a0aec0;
         }
 
-        .stat-pill span {
-            color: #68d391;
-            font-weight: 600;
-        }
+        .pill span { color: #68d391; font-weight: 600; }
 
-        /* Main layout */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
 
-        /* Stats bar */
+        /* Stats */
         .stats-bar {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -110,10 +88,12 @@
             padding: 1.25rem 1.5rem;
             border: 1px solid var(--border);
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
         }
 
         .stat-card .label {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-light);
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -121,18 +101,37 @@
         }
 
         .stat-card .value {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             color: var(--primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .stat-card .sub {
             font-size: 11px;
             color: var(--text-light);
-            margin-top: 2px;
+            margin-top: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        /* Upload section */
+        .stat-card .fresh-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #f0fff4;
+            color: var(--success);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 10px;
+            border: 1px solid #9ae6b4;
+        }
+
+        /* Upload */
         .upload-section {
             background: var(--card);
             border-radius: 16px;
@@ -142,11 +141,17 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+        }
+
         .section-title {
             font-size: 16px;
             font-weight: 600;
             color: var(--text);
-            margin-bottom: 1.25rem;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -161,52 +166,43 @@
             border-radius: 2px;
         }
 
+        .btn-danger {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid #fed7d7;
+            background: #fff5f5;
+            color: var(--error);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-danger:hover {
+            background: var(--error);
+            color: white;
+            border-color: var(--error);
+        }
+
         .upload-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.5rem;
         }
 
-        .upload-box {
+        .upload-card {
             border: 2px dashed var(--border);
             border-radius: 12px;
             padding: 1.5rem;
-            text-align: center;
             transition: all 0.2s;
-            cursor: pointer;
-            position: relative;
         }
 
-        .upload-box:hover {
-            border-color: var(--primary);
-            background: #f0f7ff;
-        }
+        .upload-card:hover { border-color: var(--primary); background: #f8fbff; }
 
-        .upload-box input[type="file"] {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            cursor: pointer;
-            width: 100%;
-            height: 100%;
-        }
-
-        .upload-icon {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-
-        .upload-box h3 {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .upload-box p {
-            font-size: 12px;
-            color: var(--text-light);
-            margin-bottom: 12px;
-        }
+        .upload-card .upload-icon { font-size: 28px; margin-bottom: 8px; }
 
         .mode-badge {
             display: inline-block;
@@ -214,11 +210,43 @@
             border-radius: 20px;
             font-size: 11px;
             font-weight: 600;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .mode-sync { background: #ebf8ff; color: #2b6cb0; }
         .mode-async { background: #f0fff4; color: #276749; }
+
+        .upload-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+        .upload-card p { font-size: 12px; color: var(--text-light); margin-bottom: 14px; }
+
+        /* File selector row */
+        .file-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .file-label {
+            flex: 1;
+            padding: 7px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 12px;
+            color: var(--text-light);
+            background: #f7fafc;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .file-label:hover { border-color: var(--primary); }
+        .file-label.has-file { color: var(--text); background: white; border-color: var(--primary); }
+
+        /* Hidden real input */
+        input[type="file"] { display: none; }
 
         .btn {
             display: inline-flex;
@@ -233,39 +261,30 @@
             transition: all 0.2s;
         }
 
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
+        .btn-primary { background: var(--primary); color: white; }
         .btn-primary:hover { background: var(--primary-dark); }
-
-        .btn-success {
-            background: var(--success);
-            color: white;
-        }
-
+        .btn-success { background: var(--success); color: white; }
+        .btn-success:hover { background: #276749; }
         .btn-primary:disabled, .btn-success:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
         }
 
-        /* Progress bar */
-        .progress-wrap {
-            margin-top: 1rem;
-            display: none;
-        }
+        .btn-sm { padding: 6px 14px; font-size: 12px; }
+
+        /* Progress */
+        .progress-wrap { margin-top: 10px; display: none; }
 
         .progress-label {
             display: flex;
             justify-content: space-between;
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-light);
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
 
         .progress-bar {
-            height: 6px;
+            height: 5px;
             background: var(--border);
             border-radius: 3px;
             overflow: hidden;
@@ -275,8 +294,6 @@
             height: 100%;
             background: linear-gradient(90deg, var(--primary), #68d391);
             border-radius: 3px;
-            transition: width 0.3s ease;
-            width: 0%;
         }
 
         .progress-fill.indeterminate {
@@ -285,24 +302,56 @@
         }
 
         @keyframes slide {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(350%); }
+            0% { transform: translateX(-200%); }
+            100% { transform: translateX(500%); }
         }
 
         /* Alert */
         .alert {
-            padding: 10px 14px;
+            padding: 9px 13px;
             border-radius: 8px;
-            font-size: 13px;
-            margin-top: 10px;
+            font-size: 12px;
+            margin-top: 8px;
             display: none;
+            line-height: 1.5;
         }
 
         .alert-success { background: #f0fff4; color: #276749; border: 1px solid #9ae6b4; }
         .alert-error { background: #fff5f5; color: #c53030; border: 1px solid #feb2b2; }
-        .alert-info { background: #ebf8ff; color: #2b6cb0; border: 1px solid #90cdf4; }
 
-        /* Filters section */
+        /* Job card */
+        .job-card {
+            background: #ebf8ff;
+            border: 1px solid #90cdf4;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-top: 10px;
+            display: none;
+            font-size: 12px;
+        }
+
+        .job-id { font-family: monospace; font-size: 10px; color: var(--text-light); margin-bottom: 5px; }
+
+        .job-row { display: flex; align-items: center; justify-content: space-between; }
+
+        .status-dot {
+            display: inline-block;
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .dot-pending { background: var(--warning); }
+        .dot-processing { background: var(--primary); animation: pulse 1s infinite; }
+        .dot-completed { background: var(--success); }
+        .dot-failed { background: var(--error); }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Filters */
         .filters-section {
             background: var(--card);
             border-radius: 16px;
@@ -314,19 +363,19 @@
 
         .filters-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr) auto;
+            grid-template-columns: repeat(4, 1fr) auto;
             gap: 1rem;
             align-items: end;
         }
 
         .filter-group label {
             display: block;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             color: var(--text-light);
             text-transform: uppercase;
             letter-spacing: 0.4px;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
 
         .filter-group input,
@@ -348,10 +397,7 @@
             box-shadow: 0 0 0 3px rgba(26,115,232,0.1);
         }
 
-        .filter-actions {
-            display: flex;
-            gap: 8px;
-        }
+        .filter-actions { display: flex; gap: 8px; }
 
         .btn-outline {
             background: white;
@@ -359,10 +405,7 @@
             border: 1px solid var(--border);
         }
 
-        .btn-outline:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
 
         /* Table */
         .table-section {
@@ -381,24 +424,12 @@
             justify-content: space-between;
         }
 
-        .table-info {
-            font-size: 13px;
-            color: var(--text-light);
-        }
+        .table-info { font-size: 13px; color: var(--text-light); }
+        .table-info strong { color: var(--text); }
 
-        .table-info strong {
-            color: var(--text);
-        }
+        .table-wrap { overflow-x: auto; }
 
-        .table-wrap {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-        }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
 
         thead th {
             background: #f7fafc;
@@ -413,18 +444,14 @@
             white-space: nowrap;
         }
 
-        tbody tr {
-            border-bottom: 1px solid var(--border);
-            transition: background 0.15s;
-        }
-
+        tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
         tbody tr:hover { background: #f7fafc; }
         tbody tr:last-child { border-bottom: none; }
 
         tbody td {
-            padding: 12px 16px;
+            padding: 11px 16px;
             color: var(--text);
-            max-width: 200px;
+            max-width: 180px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -433,7 +460,7 @@
         .rating-badge {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             background: #fffbeb;
             color: #b7791f;
             padding: 2px 8px;
@@ -446,8 +473,8 @@
             display: inline-block;
             background: #ebf8ff;
             color: #2b6cb0;
-            padding: 2px 8px;
-            border-radius: 12px;
+            padding: 1px 7px;
+            border-radius: 10px;
             font-size: 11px;
             margin: 1px;
         }
@@ -463,16 +490,14 @@
         .status-released { background: #f0fff4; color: #276749; }
         .status-other { background: #f7fafc; color: var(--text-light); }
 
-        /* Empty state */
         .empty-state {
             text-align: center;
-            padding: 4rem 2rem;
+            padding: 3rem 2rem;
             color: var(--text-light);
         }
 
-        .empty-state .icon { font-size: 48px; margin-bottom: 1rem; }
-        .empty-state h3 { font-size: 16px; margin-bottom: 8px; color: var(--text); }
-        .empty-state p { font-size: 14px; }
+        .empty-state .icon { font-size: 40px; margin-bottom: 1rem; }
+        .empty-state h3 { font-size: 15px; margin-bottom: 6px; color: var(--text); }
 
         /* Pagination */
         .pagination {
@@ -483,15 +508,9 @@
             border-top: 1px solid var(--border);
         }
 
-        .page-info {
-            font-size: 13px;
-            color: var(--text-light);
-        }
+        .page-info { font-size: 12px; color: var(--text-light); }
 
-        .page-controls {
-            display: flex;
-            gap: 4px;
-        }
+        .page-controls { display: flex; gap: 4px; }
 
         .page-btn {
             min-width: 32px;
@@ -499,7 +518,7 @@
             border: 1px solid var(--border);
             background: white;
             border-radius: 6px;
-            font-size: 13px;
+            font-size: 12px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -508,33 +527,13 @@
             color: var(--text);
         }
 
-        .page-btn:hover:not(:disabled) {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .page-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .page-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        /* Loading overlay */
-        .loading-row td {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-light);
-        }
+        .page-btn:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+        .page-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
         .spinner {
             display: inline-block;
-            width: 20px;
-            height: 20px;
+            width: 18px; height: 18px;
             border: 2px solid var(--border);
             border-top-color: var(--primary);
             border-radius: 50%;
@@ -543,51 +542,33 @@
             margin-right: 8px;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Job status card */
-        .job-status-card {
-            background: #ebf8ff;
-            border: 1px solid #90cdf4;
-            border-radius: 10px;
-            padding: 12px 16px;
-            margin-top: 12px;
+        /* Confirm modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
             display: none;
-            font-size: 13px;
-        }
-
-        .job-status-card .job-id {
-            font-family: monospace;
-            font-size: 11px;
-            color: var(--text-light);
-            margin-bottom: 6px;
-        }
-
-        .job-status-row {
-            display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
         }
 
-        .status-dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            margin-right: 6px;
+        .modal-overlay.open { display: flex; }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            width: 420px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
         }
 
-        .dot-pending { background: var(--warning); }
-        .dot-processing { background: var(--primary); animation: pulse 1s infinite; }
-        .dot-completed { background: var(--success); }
-        .dot-failed { background: var(--error); }
+        .modal h3 { font-size: 18px; margin-bottom: 8px; color: var(--text); }
+        .modal p { font-size: 14px; color: var(--text-light); margin-bottom: 1.5rem; }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
+        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
 
         footer {
             text-align: center;
@@ -599,16 +580,30 @@
 </head>
 <body>
 
+<!-- Confirm Delete Modal -->
+<div class="modal-overlay" id="delete-modal">
+    <div class="modal">
+        <h3>⚠️ Delete All Movies?</h3>
+        <p>This will permanently remove all records from the database. This action cannot be undone.</p>
+        <div class="modal-actions">
+            <button class="btn btn-outline" onclick="closeDeleteModal()">Cancel</button>
+            <button class="btn btn-danger" id="confirm-delete-btn" onclick="confirmDeleteAll()">
+                Yes, Delete All
+            </button>
+        </div>
+    </div>
+</div>
+
 <header>
     <div class="header-inner">
         <div class="logo">
             <span class="logo-badge">DR × IMDB</span>
             <span class="logo-title">Content Upload & Review System</span>
         </div>
-        <div class="header-meta">
-            <div class="stat-pill">Sync: <span>190s</span></div>
-            <div class="stat-pill">Async: <span>99s</span></div>
-            <div class="stat-pill">Scale: <span>1GB CSV</span></div>
+        <div class="header-pills">
+            <div class="pill">Scale: <span>1GB CSV</span></div>
+            <div class="pill">Chunked: <span>O(1) memory</span></div>
+            <div class="pill">Live: <span>GCP + Caddy</span></div>
         </div>
     </div>
 </header>
@@ -618,84 +613,110 @@
     <!-- Stats Bar -->
     <div class="stats-bar">
         <div class="stat-card">
-            <div class="label">Total Movies</div>
+            <div class="label">Total Movies in DB</div>
             <div class="value" id="stat-total">—</div>
-            <div class="sub">in database</div>
+            <div class="sub" id="stat-total-sub">loading...</div>
         </div>
-        <div class="stat-card">
-            <div class="label">Sync Upload Time</div>
-            <div class="value">190s</div>
-            <div class="sub">45,428 records · blocks request</div>
+        <div class="stat-card" id="stat-last-card">
+            <div class="label">Last Upload — File</div>
+            <div class="value" id="stat-last-file">—</div>
+            <div class="sub" id="stat-last-size">no uploads yet</div>
         </div>
-        <div class="stat-card">
-            <div class="label">Async Upload Time</div>
-            <div class="value">99s</div>
-            <div class="sub">background · returns in 50ms</div>
+        <div class="stat-card" id="stat-sync-card">
+            <div class="label">Last Sync Upload</div>
+            <div class="value" id="stat-sync-time">—</div>
+            <div class="sub" id="stat-sync-sub">no sync upload yet</div>
         </div>
-        <div class="stat-card">
-            <div class="label">Max File Size</div>
-            <div class="value">1 GB</div>
-            <div class="sub">chunked streaming · O(1) memory</div>
+        <div class="stat-card" id="stat-async-card">
+            <div class="label">Last Async Upload</div>
+            <div class="value" id="stat-async-time">—</div>
+            <div class="sub" id="stat-async-sub">no async upload yet</div>
         </div>
     </div>
 
     <!-- Upload Section -->
     <div class="upload-section">
-        <div class="section-title">CSV Upload</div>
+        <div class="section-header">
+            <div class="section-title">CSV Upload</div>
+            <button class="btn-danger btn-sm" onclick="openDeleteModal()">
+                🗑️ Delete All Movies
+            </button>
+        </div>
         <div class="upload-grid">
 
-            <!-- Sync Upload -->
+            <!-- Sync -->
             <div>
-                <div class="upload-box" id="sync-drop">
-                    <input type="file" id="sync-file" accept=".csv">
+                <div class="upload-card">
                     <div class="upload-icon">📄</div>
                     <span class="mode-badge mode-sync">SYNC MODE</span>
                     <h3>Synchronous Upload</h3>
-                    <p>Blocks until complete. Best for measuring raw performance.</p>
-                    <button class="btn btn-primary" id="sync-btn" onclick="uploadFile('sync')">
-                        Upload CSV
-                    </button>
+                    <p>Blocks until complete. Returns total time and records inserted.</p>
+
+                    <!-- File selector -->
+                    <input type="file" id="sync-file" accept=".csv"
+                           onchange="onFileSelected('sync')">
+                    <div class="file-row">
+                        <div class="file-label" id="sync-file-label"
+                             onclick="document.getElementById('sync-file').click()">
+                            📁 Choose CSV file...
+                        </div>
+                        <button class="btn btn-primary btn-sm"
+                                id="sync-btn"
+                                onclick="uploadFile('sync')"
+                                disabled>
+                            Upload
+                        </button>
+                    </div>
                 </div>
                 <div class="progress-wrap" id="sync-progress">
                     <div class="progress-label">
-                        <span>Processing...</span>
-                        <span id="sync-pct">0%</span>
+                        <span>Processing — this may take a while...</span>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress-fill indeterminate" id="sync-fill"></div>
+                        <div class="progress-fill indeterminate"></div>
                     </div>
                 </div>
                 <div class="alert" id="sync-alert"></div>
             </div>
 
-            <!-- Async Upload -->
+            <!-- Async -->
             <div>
-                <div class="upload-box" id="async-drop">
-                    <input type="file" id="async-file" accept=".csv">
+                <div class="upload-card">
                     <div class="upload-icon">⚡</div>
                     <span class="mode-badge mode-async">ASYNC MODE</span>
                     <h3>Asynchronous Upload</h3>
-                    <p>Returns instantly. Celery + Redis processes in background.</p>
-                    <button class="btn btn-success" id="async-btn" onclick="uploadFile('async')">
-                        Upload CSV
-                    </button>
+                    <p>Returns in ~50ms. Celery + Redis processes in background.</p>
+
+                    <input type="file" id="async-file" accept=".csv"
+                           onchange="onFileSelected('async')">
+                    <div class="file-row">
+                        <div class="file-label" id="async-file-label"
+                             onclick="document.getElementById('async-file').click()">
+                            📁 Choose CSV file...
+                        </div>
+                        <button class="btn btn-success btn-sm"
+                                id="async-btn"
+                                onclick="uploadFile('async')"
+                                disabled>
+                            Upload
+                        </button>
+                    </div>
                 </div>
                 <div class="progress-wrap" id="async-progress">
                     <div class="progress-label">
                         <span id="async-status-text">Queuing task...</span>
-                        <span id="async-pct"></span>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress-fill indeterminate" id="async-fill"></div>
+                        <div class="progress-fill indeterminate"></div>
                     </div>
                 </div>
-                <div class="job-status-card" id="job-card">
+                <div class="job-card" id="job-card">
                     <div class="job-id" id="job-id-text"></div>
-                    <div class="job-status-row">
+                    <div class="job-row">
                         <div id="job-status-label">
-                            <span class="status-dot dot-pending"></span> Pending
+                            <span class="status-dot dot-pending"></span>Pending
                         </div>
-                        <div id="job-inserted" style="color: var(--text-light)"></div>
+                        <div id="job-inserted" style="color:var(--text-light)"></div>
                     </div>
                 </div>
                 <div class="alert" id="async-alert"></div>
@@ -706,11 +727,12 @@
 
     <!-- Filters -->
     <div class="filters-section">
-        <div class="section-title">Browse Movies</div>
+        <div class="section-title" style="margin-bottom:1.25rem">Browse Movies</div>
         <div class="filters-grid">
             <div class="filter-group">
                 <label>Year</label>
-                <input type="number" id="filter-year" placeholder="e.g. 1995" min="1900" max="2030">
+                <input type="number" id="filter-year"
+                       placeholder="e.g. 1995" min="1900" max="2030">
             </div>
             <div class="filter-group">
                 <label>Language</label>
@@ -768,15 +790,13 @@
                     </tr>
                 </thead>
                 <tbody id="movies-tbody">
-                    <tr class="loading-row">
-                        <td colspan="10">
-                            <div class="empty-state">
-                                <div class="icon">🎬</div>
-                                <h3>No data loaded yet</h3>
-                                <p>Upload a CSV file or click Search to browse movies</p>
-                            </div>
-                        </td>
-                    </tr>
+                    <tr><td colspan="10">
+                        <div class="empty-state">
+                            <div class="icon">🎬</div>
+                            <h3>No data loaded yet</h3>
+                            <p>Upload a CSV or click Search</p>
+                        </div>
+                    </td></tr>
                 </tbody>
             </table>
         </div>
@@ -789,25 +809,49 @@
 </div>
 
 <footer>
-    Built by Zohaib · DailyRounds SDE-1 Assignment · Flask + MongoDB + Celery + Redis · Deployed on GCP
+    Built by Zohaib · DailyRounds SDE-1 Assignment · Flask + MongoDB + Celery + Redis · GCP
 </footer>
 
 <script>
-    const API = '';  // same origin
     let currentPage = 1;
-    let currentTotal = 0;
     let jobPollInterval = null;
 
-    // ─── Upload ───────────────────────────────────────────────────────────────
+    // ── File selection ────────────────────────────────────────────────────────
+
+    function onFileSelected(mode) {
+        const input = document.getElementById(`${mode}-file`);
+        const label = document.getElementById(`${mode}-file-label`);
+        const btn   = document.getElementById(`${mode}-btn`);
+
+        if (input.files.length > 0) {
+            const file = input.files[0];
+            const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
+            label.textContent = `✅ ${file.name} (${sizeMB} MB)`;
+            label.classList.add('has-file');
+            btn.disabled = false;   // enable upload button only after file is chosen
+        } else {
+            label.textContent = '📁 Choose CSV file...';
+            label.classList.remove('has-file');
+            btn.disabled = true;
+        }
+    }
+
+    // ── Upload ────────────────────────────────────────────────────────────────
 
     async function uploadFile(mode) {
-        const fileInput = document.getElementById(`${mode}-file`);
-        const file = fileInput.files[0];
+        const input = document.getElementById(`${mode}-file`);
+        const file  = input.files[0];
 
         if (!file) {
             showAlert(mode, 'Please select a CSV file first.', 'error');
             return;
         }
+
+        const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
+
+        // Update "last upload" stat immediately
+        document.getElementById('stat-last-file').textContent = file.name;
+        document.getElementById('stat-last-size').textContent = `${sizeMB} MB · ${mode} mode`;
 
         const formData = new FormData();
         formData.append('file', file);
@@ -816,8 +860,10 @@
         hideAlert(mode);
         document.getElementById(`${mode}-btn`).disabled = true;
 
+        const startTime = Date.now();
+
         try {
-            const res = await fetch(`${API}/api/v1/movies/upload/${mode}`, {
+            const res = await fetch(`/api/v1/movies/upload/${mode}`, {
                 method: 'POST',
                 body: formData
             });
@@ -825,17 +871,27 @@
 
             if (data.success) {
                 if (mode === 'sync') {
+                    const elapsed = data.data.processing_time_seconds;
+                    const inserted = data.data.total_inserted;
+
                     showProgress('sync', false);
                     showAlert('sync',
-                        `✅ Done! ${data.data.total_inserted.toLocaleString()} records inserted in ${data.data.processing_time_seconds}s`,
+                        `✅ Done — ${inserted.toLocaleString()} records inserted in ${elapsed}s`,
                         'success'
                     );
+
+                    // Update sync stat card
+                    document.getElementById('stat-sync-time').textContent = `${elapsed}s`;
+                    document.getElementById('stat-sync-sub').textContent =
+                        `${inserted.toLocaleString()} records · ${file.name}`;
+                    addFreshBadge('stat-sync-card');
+
                     loadMovies(1);
+
                 } else {
-                    // Async — start polling
                     const jobId = data.data.job_id;
                     showJobCard(jobId);
-                    pollJobStatus(jobId);
+                    pollJobStatus(jobId, file.name);
                 }
             } else {
                 showProgress(mode, false);
@@ -849,108 +905,157 @@
         }
     }
 
-    // ─── Job Status Polling ───────────────────────────────────────────────────
+    // ── Async job polling ─────────────────────────────────────────────────────
 
     function showJobCard(jobId) {
         const card = document.getElementById('job-card');
         card.style.display = 'block';
         document.getElementById('job-id-text').textContent = `Job ID: ${jobId}`;
         document.getElementById('job-status-label').innerHTML =
-            `<span class="status-dot dot-processing"></span> Processing`;
+            `<span class="status-dot dot-processing"></span>Processing`;
         document.getElementById('job-inserted').textContent = '';
+        document.getElementById('async-status-text').textContent =
+            'Worker processing in background...';
     }
 
-    function pollJobStatus(jobId) {
+    function pollJobStatus(jobId, filename) {
         if (jobPollInterval) clearInterval(jobPollInterval);
 
         jobPollInterval = setInterval(async () => {
             try {
-                const res = await fetch(`${API}/api/v1/movies/upload/status/${jobId}`);
+                const res  = await fetch(`/api/v1/movies/upload/status/${jobId}`);
                 const data = await res.json();
-
                 if (!data.success) return;
 
                 const job = data.data;
-                const statusLabel = document.getElementById('job-status-label');
-                const insertedEl = document.getElementById('job-inserted');
-                const statusText = document.getElementById('async-status-text');
 
-                if (job.status === 'processing') {
-                    statusLabel.innerHTML =
-                        `<span class="status-dot dot-processing"></span> Processing`;
-                    statusText.textContent = 'Worker processing in background...';
-
-                } else if (job.status === 'completed') {
+                if (job.status === 'completed') {
                     clearInterval(jobPollInterval);
-                    statusLabel.innerHTML =
-                        `<span class="status-dot dot-completed"></span> Completed`;
-                    insertedEl.textContent =
+
+                    document.getElementById('job-status-label').innerHTML =
+                        `<span class="status-dot dot-completed"></span>Completed`;
+                    document.getElementById('job-inserted').textContent =
                         `${job.total_inserted.toLocaleString()} records · ${job.processing_time_seconds}s`;
+
                     showProgress('async', false);
                     showAlert('async',
-                        `✅ Done! ${job.total_inserted.toLocaleString()} records inserted in ${job.processing_time_seconds}s`,
+                        `✅ Done — ${job.total_inserted.toLocaleString()} records inserted in ${job.processing_time_seconds}s`,
                         'success'
                     );
+
+                    // Update async stat card
+                    document.getElementById('stat-async-time').textContent =
+                        `${job.processing_time_seconds}s`;
+                    document.getElementById('stat-async-sub').textContent =
+                        `${job.total_inserted.toLocaleString()} records · ${filename}`;
+                    addFreshBadge('stat-async-card');
+
                     loadMovies(1);
 
                 } else if (job.status === 'failed') {
                     clearInterval(jobPollInterval);
-                    statusLabel.innerHTML =
-                        `<span class="status-dot dot-failed"></span> Failed`;
+                    document.getElementById('job-status-label').innerHTML =
+                        `<span class="status-dot dot-failed"></span>Failed`;
                     showProgress('async', false);
                     showAlert('async', `❌ ${job.error}`, 'error');
                 }
-            } catch (e) {
-                // Silently retry
-            }
-        }, 3000); // poll every 3 seconds
+            } catch (e) { /* silent retry */ }
+        }, 3000);
     }
 
-    // ─── Movies Table ─────────────────────────────────────────────────────────
+    // ── Delete all ────────────────────────────────────────────────────────────
+
+    function openDeleteModal() {
+        document.getElementById('delete-modal').classList.add('open');
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('delete-modal').classList.remove('open');
+    }
+
+    async function confirmDeleteAll() {
+        const btn = document.getElementById('confirm-delete-btn');
+        btn.disabled = true;
+        btn.textContent = 'Deleting...';
+
+        try {
+            const res  = await fetch('/api/v1/movies/delete-all', { method: 'DELETE' });
+            const data = await res.json();
+
+            closeDeleteModal();
+
+            if (data.success) {
+                // Reset all stats
+                document.getElementById('stat-total').textContent = '0';
+                document.getElementById('stat-total-sub').textContent = 'database cleared';
+                document.getElementById('stat-last-file').textContent = '—';
+                document.getElementById('stat-last-size').textContent = 'no uploads yet';
+                loadMovies(1);
+            } else {
+                alert('Delete failed: ' + data.message);
+            }
+        } catch (err) {
+            closeDeleteModal();
+            alert('Network error: ' + err.message);
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Yes, Delete All';
+        }
+    }
+
+    // Close modal on overlay click
+    document.getElementById('delete-modal').addEventListener('click', function(e) {
+        if (e.target === this) closeDeleteModal();
+    });
+
+    // ── Movies table ──────────────────────────────────────────────────────────
 
     async function loadMovies(page) {
         currentPage = page;
 
-        const year = document.getElementById('filter-year').value;
+        const year     = document.getElementById('filter-year').value;
         const language = document.getElementById('filter-language').value;
-        const sort = document.getElementById('filter-sort').value;
-        const size = document.getElementById('filter-size').value;
+        const sort     = document.getElementById('filter-sort').value;
+        const size     = document.getElementById('filter-size').value;
 
         const params = new URLSearchParams({ page, page_size: size });
-        if (year) params.append('year', year);
+        if (year)     params.append('year', year);
         if (language) params.append('language', language);
-        if (sort) params.append('sort_by', sort);
+        if (sort)     params.append('sort_by', sort);
 
         showTableLoading();
 
         try {
-            const res = await fetch(`${API}/api/v1/movies/?${params}`);
+            const res  = await fetch(`/api/v1/movies/?${params}`);
             const data = await res.json();
 
             if (data.success) {
                 renderTable(data.data, data.meta, page, parseInt(size));
-                updateStatTotal(data.meta.total);
+                // Update total stat
+                document.getElementById('stat-total').textContent =
+                    data.meta.total.toLocaleString();
+                document.getElementById('stat-total-sub').textContent =
+                    `${data.meta.total_pages} pages · ${size} per page`;
             } else {
                 showTableError(data.message);
             }
         } catch (err) {
-            showTableError('Failed to load movies. Is the server running?');
+            showTableError('Failed to load. Is the server running?');
         }
     }
 
     function renderTable(movies, meta, page, pageSize) {
-        const tbody = document.getElementById('movies-tbody');
+        const tbody  = document.getElementById('movies-tbody');
         const offset = (page - 1) * pageSize;
 
         if (!movies.length) {
-            tbody.innerHTML = `
-                <tr class="loading-row"><td colspan="10">
-                    <div class="empty-state">
-                        <div class="icon">🔍</div>
-                        <h3>No movies found</h3>
-                        <p>Try adjusting your filters</p>
-                    </div>
-                </td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="10">
+                <div class="empty-state">
+                    <div class="icon">🔍</div>
+                    <h3>No movies found</h3>
+                    <p>Try adjusting your filters</p>
+                </div>
+            </td></tr>`;
             document.getElementById('pagination').style.display = 'none';
             document.getElementById('table-info').textContent = '0 results';
             return;
@@ -964,59 +1069,52 @@
             const statusClass = (m.status || '').toLowerCase() === 'released'
                 ? 'status-released' : 'status-other';
 
-            const budget = m.budget
-                ? `$${(m.budget / 1e6).toFixed(1)}M` : '—';
+            const budget = m.budget ? `$${(m.budget / 1e6).toFixed(1)}M` : '—';
 
-            return `
-                <tr>
-                    <td style="color:var(--text-light)">${offset + i + 1}</td>
-                    <td title="${m.title || ''}" style="font-weight:600">${m.title || '—'}</td>
-                    <td title="${m.original_title || ''}">${m.original_title || '—'}</td>
-                    <td>${m.release_date || '—'}</td>
-                    <td><span class="rating-badge">⭐ ${m.vote_average ?? '—'}</span></td>
-                    <td>${m.vote_count ? m.vote_count.toLocaleString() : '—'}</td>
-                    <td>${langs}</td>
-                    <td><span class="status-badge ${statusClass}">${m.status || '—'}</span></td>
-                    <td>${m.runtime ? m.runtime + ' min' : '—'}</td>
-                    <td>${budget}</td>
-                </tr>`;
+            return `<tr>
+                <td style="color:var(--text-light)">${offset + i + 1}</td>
+                <td title="${m.title || ''}" style="font-weight:600">${m.title || '—'}</td>
+                <td title="${m.original_title || ''}">${m.original_title || '—'}</td>
+                <td>${m.release_date || '—'}</td>
+                <td><span class="rating-badge">⭐ ${m.vote_average ?? '—'}</span></td>
+                <td>${m.vote_count ? m.vote_count.toLocaleString() : '—'}</td>
+                <td>${langs}</td>
+                <td><span class="status-badge ${statusClass}">${m.status || '—'}</span></td>
+                <td>${m.runtime ? m.runtime + ' min' : '—'}</td>
+                <td>${budget}</td>
+            </tr>`;
         }).join('');
 
-        // Table info
         const start = offset + 1;
-        const end = Math.min(offset + movies.length, meta.total);
+        const end   = Math.min(offset + movies.length, meta.total);
         document.getElementById('table-info').innerHTML =
-            `Showing <strong>${start}–${end}</strong> of <strong>${meta.total.toLocaleString()}</strong> results`;
+            `Showing <strong>${start}–${end}</strong> of <strong>${meta.total.toLocaleString()}</strong>`;
 
         renderPagination(meta);
     }
 
     function renderPagination(meta) {
-        const wrap = document.getElementById('pagination');
+        const wrap     = document.getElementById('pagination');
         const controls = document.getElementById('page-controls');
-        const info = document.getElementById('page-info');
+        const info     = document.getElementById('page-info');
 
         wrap.style.display = 'flex';
-        info.textContent = `Page ${meta.page} of ${meta.total_pages}`;
+        info.textContent   = `Page ${meta.page} of ${meta.total_pages}`;
 
-        const pages = [];
+        const cur   = meta.page;
         const total = meta.total_pages;
-        const cur = meta.page;
 
-        // Always show first, last, current ±2
-        const show = new Set([1, total, cur, cur-1, cur-2, cur+1, cur+2]
+        const show   = new Set([1, total, cur, cur-1, cur-2, cur+1, cur+2]
             .filter(p => p >= 1 && p <= total));
-        const sorted = [...show].sort((a,b) => a-b);
+        const sorted = [...show].sort((a, b) => a - b);
 
-        let html = `
-            <button class="page-btn" onclick="loadMovies(${cur-1})"
-                ${cur === 1 ? 'disabled' : ''}>‹</button>`;
+        let html = `<button class="page-btn" onclick="loadMovies(${cur-1})"
+            ${cur === 1 ? 'disabled' : ''}>‹</button>`;
 
         let prev = 0;
         for (const p of sorted) {
-            if (prev && p - prev > 1) {
+            if (prev && p - prev > 1)
                 html += `<button class="page-btn" disabled>…</button>`;
-            }
             html += `<button class="page-btn ${p === cur ? 'active' : ''}"
                 onclick="loadMovies(${p})">${p}</button>`;
             prev = p;
@@ -1028,16 +1126,22 @@
         controls.innerHTML = html;
     }
 
-    function updateStatTotal(total) {
-        document.getElementById('stat-total').textContent =
-            total.toLocaleString();
+    // ── Helpers ───────────────────────────────────────────────────────────────
+
+    function addFreshBadge(cardId) {
+        const card = document.getElementById(cardId);
+        let badge = card.querySelector('.fresh-badge');
+        if (!badge) {
+            badge = document.createElement('div');
+            badge.className = 'fresh-badge';
+            card.appendChild(badge);
+        }
+        badge.textContent = 'LATEST';
+        setTimeout(() => badge && badge.remove(), 10000);
     }
 
-    // ─── UI Helpers ───────────────────────────────────────────────────────────
-
     function showProgress(mode, show) {
-        const wrap = document.getElementById(`${mode}-progress`);
-        wrap.style.display = show ? 'block' : 'none';
+        document.getElementById(`${mode}-progress`).style.display = show ? 'block' : 'none';
     }
 
     function showAlert(mode, msg, type) {
@@ -1053,32 +1157,31 @@
 
     function showTableLoading() {
         document.getElementById('movies-tbody').innerHTML = `
-            <tr class="loading-row"><td colspan="10">
-                <span class="spinner"></span> Loading movies...
+            <tr><td colspan="10" style="text-align:center;padding:2rem">
+                <span class="spinner"></span>Loading...
             </td></tr>`;
         document.getElementById('pagination').style.display = 'none';
     }
 
     function showTableError(msg) {
         document.getElementById('movies-tbody').innerHTML = `
-            <tr class="loading-row"><td colspan="10">
+            <tr><td colspan="10">
                 <div class="empty-state">
                     <div class="icon">⚠️</div>
-                    <h3>Error</h3>
-                    <p>${msg}</p>
+                    <h3>Error</h3><p>${msg}</p>
                 </div>
             </td></tr>`;
     }
 
     function resetFilters() {
-        document.getElementById('filter-year').value = '';
+        document.getElementById('filter-year').value     = '';
         document.getElementById('filter-language').value = '';
-        document.getElementById('filter-sort').value = '';
-        document.getElementById('filter-size').value = '20';
+        document.getElementById('filter-sort').value     = '';
+        document.getElementById('filter-size').value     = '20';
         loadMovies(1);
     }
 
-    // ─── Init ─────────────────────────────────────────────────────────────────
+    // ── Init ──────────────────────────────────────────────────────────────────
     loadMovies(1);
 </script>
 </body>

@@ -157,3 +157,19 @@ def debug_db():
         return {"status": "OK", "collections": collections}, 200
     except Exception as e:
         return {"status": "ERROR", "reason": str(e)}, 500
+
+@movies_bp.route("/delete-all", methods=["DELETE"])
+def delete_all_movies():
+    """
+    DELETE /api/v1/movies/delete-all
+    Deletes all documents from the movies collection.
+    """
+    try:
+        db = mongo.db
+        result = db["movies"].delete_many({})
+        return success_response(
+            data={"deleted_count": result.deleted_count},
+            message=f"Deleted {result.deleted_count} records successfully.",
+        )
+    except Exception as e:
+        return error_response(f"Unexpected error: {str(e)}", 500)
